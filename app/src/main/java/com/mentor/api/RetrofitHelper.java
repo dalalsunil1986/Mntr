@@ -51,12 +51,21 @@ public class RetrofitHelper
                 .setEndpoint(BuildConfig.DEBUG?MentorApiService.TEST_ENDPOINT:MentorApiService.ENDPOINT)
                 .setLogLevel(BuildConfig.DEBUG?RestAdapter.LogLevel.FULL: RestAdapter.LogLevel.NONE)
                 .setConverter(new GsonConverter(builder.create()))
-                .setErrorHandler(new MentorErrorHandler())
+                .setErrorHandler(new MentorErrorHandler(app))
                 .setRequestInterceptor(requestInterceptor)
                 .build();
 
         return mentorAdapter.create(MentorApiService.class);
+    }
 
+    public MentorTokenService newMentorTokenService()
+    {
+        RestAdapter mentorAdapter = new RestAdapter.Builder()
+                .setEndpoint(BuildConfig.DEBUG ? MentorTokenService.TEST_ENDPOINT : MentorTokenService.ENDPOINT)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .build();
+
+        return mentorAdapter.create(MentorTokenService.class);
     }
 
 }

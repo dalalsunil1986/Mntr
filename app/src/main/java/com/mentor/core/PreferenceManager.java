@@ -31,8 +31,6 @@ public class PreferenceManager {
         return "";
     }
 
-
-
     public void clear() {
         mPref.edit().clear().apply();
     }
