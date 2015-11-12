@@ -24,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activities.LoginActivitiy"></activity>
+        <activity android:name=".ui.activities.BaseActivity"></activity>
     </application>
 
 </manifest>
