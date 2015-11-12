@@ -1,10 +1,17 @@
 package com.mentor.api;
 
+import android.app.Application;
+
 import com.google.gson.GsonBuilder;
+import com.mentor.BuildConfig;
+import com.mentor.MentorApp;
 import com.mentor.core.DateTimeConverter;
 import com.mentor.core.MentorErrorHandler;
+import com.mentor.core.PreferenceManager;
 
 import org.joda.time.DateTime;
+
+import javax.inject.Inject;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -15,6 +22,16 @@ import retrofit.converter.GsonConverter;
  */
 public class RetrofitHelper
 {
+    @Inject
+    private PreferenceManager preferenceManager;
+    private Application app;
+
+    public RetrofitHelper(Application app)
+    {
+        this.app=app;
+        MentorApp.get(app).getComponent().inject(this);
+    }
+
     public MentorApiService newMentorApiService()
     {
         final GsonBuilder builder = new GsonBuilder();
@@ -24,15 +41,15 @@ public class RetrofitHelper
             @Override
             public void intercept(RequestInterceptor.RequestFacade request) {
 
-               // request.addHeader("Authorization", "Bearer " + getUserManager().getBearerToken());
-                //request.addHeader("User", getUserManager().getName());
-                //request.addHeader("UserFacebookId", getUserManager().getKeyFacebookId());
+                request.addHeader("Authorization", "Bearer " + preferenceManager.getBearerToken());
+                request.addHeader("User", preferenceManager.getName());
+                request.addHeader("UserFacebookId", preferenceManager.getUserFacebookId());
             }
         };
 
         RestAdapter mentorAdapter = new RestAdapter.Builder()
-                .setEndpoint(MentorApiService.ENDPOINT)
-                .setLogLevel(RestAdapter.LogLevel.NONE)
+                .setEndpoint(BuildConfig.DEBUG?MentorApiService.TEST_ENDPOINT:MentorApiService.ENDPOINT)
+                .setLogLevel(BuildConfig.DEBUG?RestAdapter.LogLevel.FULL: RestAdapter.LogLevel.NONE)
                 .setConverter(new GsonConverter(builder.create()))
                 .setErrorHandler(new MentorErrorHandler())
                 .setRequestInterceptor(requestInterceptor)

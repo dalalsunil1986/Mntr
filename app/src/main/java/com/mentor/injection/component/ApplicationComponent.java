@@ -1,5 +1,6 @@
 package com.mentor.injection.component;
 
+import com.mentor.api.RetrofitHelper;
 import com.mentor.injection.module.ApplicationModule;
 import com.mentor.ui.MainActivity;
 import com.mentor.ui.activities.LoginActivitiy;
@@ -18,4 +19,5 @@ public interface ApplicationComponent {
 
     void inject(MainActivity mainActivity);
     void inject(LoginActivitiy loginActivitiy);
+    void inject(RetrofitHelper retrofitHelper);
 }

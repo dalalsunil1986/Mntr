@@ -16,6 +16,23 @@ public class PreferenceManager {
         mPref = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
     }
 
+    public String getUserFacebookId()
+    {
+        return "";
+    }
+
+    public String getName()
+    {
+        return "";
+    }
+
+    public String getBearerToken()
+    {
+        return "";
+    }
+
+
+
     public void clear() {
         mPref.edit().clear().apply();
     }
