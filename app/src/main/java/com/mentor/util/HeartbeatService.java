@@ -3,10 +3,6 @@ package com.mentor.util;
 import android.content.Intent;
 import android.util.Log;
 
-import com.mentor.util.HeartbeatFixerUtils;
-import com.mentor.util.WakefulIntentService;
-
-
 public class HeartbeatService extends WakefulIntentService {
 
     private static final Intent GTALK_HEART_BEAT_INTENT = new Intent("com.google.android.intent.action.GTALK_HEARTBEAT");

@@ -1,4 +1,4 @@
-package com.mentor.ui;
+package com.mentor.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

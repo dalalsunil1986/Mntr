@@ -3,7 +3,7 @@ package com.mentor.injection.component;
 import com.mentor.api.RetrofitHelper;
 import com.mentor.core.MentorErrorHandler;
 import com.mentor.injection.module.ApplicationModule;
-import com.mentor.ui.MainActivity;
+import com.mentor.ui.activities.MainActivity;
 import com.mentor.ui.activities.LoginActivitiy;
 
 import javax.inject.Singleton;
