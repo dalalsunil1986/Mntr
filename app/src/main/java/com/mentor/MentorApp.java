@@ -1,23 +1,56 @@
 package com.mentor;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
+
+import com.mentor.injection.component.ApplicationComponent;
+import com.mentor.injection.component.DaggerApplicationComponent;
+import com.mentor.injection.module.ApplicationModule;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import eu.inloop.easygcm.GcmListener;
+import timber.log.Timber;
 
 /**
  * Created by Joel on 09/11/2015.
  */
 public class MentorApp extends Application implements GcmListener {
 
+    ApplicationComponent applicationComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         JodaTimeAndroid.init(this);
+        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+
+
+        applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+
     }
+
+    public static MentorApp get(Context context) {
+        return (MentorApp) context.getApplicationContext();
+    }
+
+    public ApplicationComponent getComponent() {
+        return applicationComponent;
+    }
+
+    // Needed to replace the component with a test specific one
+    public void setComponent(ApplicationComponent applicationComponent) {
+        applicationComponent = applicationComponent;
+    }
+
+    /*
+    * These methods are triggered when a push notification arrives from
+    * the server via GCM
+    * */
 
     @Override
     public void onMessage(String s, Bundle bundle) {

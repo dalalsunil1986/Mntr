@@ -6,13 +6,13 @@ import android.content.SharedPreferences;
 /**
  * Created by Joel on 11/11/2015.
  */
-public class PreferencesHelper {
+public class PreferenceManager {
     private static SharedPreferences mPref;
 
     public static final String PREF_FILE_NAME = "mentor_preferences";
 
 
-    public PreferencesHelper(Context context) {
+    public PreferenceManager(Context context) {
         mPref = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
     }
 
