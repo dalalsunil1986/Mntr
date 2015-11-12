@@ -23,7 +23,7 @@ import retrofit.converter.GsonConverter;
 public class RetrofitHelper
 {
     @Inject
-    private PreferenceManager preferenceManager;
+    PreferenceManager preferenceManager;
     private Application app;
 
     public RetrofitHelper(Application app)

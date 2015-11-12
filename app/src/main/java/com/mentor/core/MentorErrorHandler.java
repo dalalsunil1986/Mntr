@@ -21,7 +21,7 @@ public class MentorErrorHandler implements ErrorHandler {
     private final Application app;
 
     @Inject
-    private PreferenceManager preferenceManager;
+    PreferenceManager preferenceManager;
 
     public MentorErrorHandler(Application app) {
         this.app = app;
