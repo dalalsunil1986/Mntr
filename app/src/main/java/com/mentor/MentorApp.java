@@ -7,11 +7,14 @@ import android.os.Bundle;
 import com.mentor.injection.component.ApplicationComponent;
 import com.mentor.injection.component.DaggerApplicationComponent;
 import com.mentor.injection.module.ApplicationModule;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.Iconics;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import eu.inloop.easygcm.GcmListener;
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Joel on 09/11/2015.
@@ -25,7 +28,16 @@ public class MentorApp extends Application implements GcmListener {
         super.onCreate();
 
         JodaTimeAndroid.init(this);
+
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("Roboto-Regular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
+
+        Iconics.registerFont(new CommunityMaterial());
 
 
         applicationComponent = DaggerApplicationComponent.builder()

@@ -2,4 +2,9 @@
     <string name="app_name">Mentor</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="easygcm_sender_id">1082451694502</string>
+    <string name="drawer_item_mentorcast">Mentorcasts</string>
+    <string name="drawer_item_profile">My Profile</string>
+    <string name="drawer_item_notifications">Notifications</string>
+    <string name="drawer_item_settings">Settings</string>
+    <string name="drawer_item_logout">Log out</string>
 </resources>
