@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.mentor.MentorApp;
 import com.mentor.injection.component.ApplicationComponent;
-import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
