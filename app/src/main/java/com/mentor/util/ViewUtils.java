@@ -14,4 +14,9 @@ public class ViewUtils {
     {
         return new IconicsDrawable(context,icon).colorRes(android.R.color.white).sizeDp(size);
     }
+
+    public static Drawable getMaterialIcon(Context context,IIcon icon)
+    {
+        return getMaterialIcon(context,icon,18);
+    }
 }

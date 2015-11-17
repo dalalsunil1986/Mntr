@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
+import com.mentor.ui.adapters.TabFragmentAdapter;
 import com.mentor.util.ViewUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,10 +27,12 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.tabs)
     TabLayout tabs;
     @Bind(R.id.viewpager)
-    ViewPager viewpager;
+    ViewPager viewPager;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     private FragmentToolbarListener listener;
+    private TabFragmentAdapter fragmentAdapter;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,8 +69,21 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listener.onToolbarLoaded(toolbar);
-        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(),CommunityMaterial.Icon.cmd_video,18));
+        if (viewPager != null) {
+            setupViewPager(viewPager);
+        }
+        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video));
+        tabs.setupWithViewPager(viewPager);
+
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+         fragmentAdapter = new TabFragmentAdapter(getChildFragmentManager());
+        fragmentAdapter.addFragment(new TimelineFragment(), "Timeline");
+        fragmentAdapter.addFragment(new DiscoverFragment(), "Discover");
+        viewPager.setAdapter(fragmentAdapter);
+    }
+
 
     @Override
     public void onDetach() {
