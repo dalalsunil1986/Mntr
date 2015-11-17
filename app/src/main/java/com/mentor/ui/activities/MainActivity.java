@@ -2,6 +2,9 @@ package com.mentor.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +13,7 @@ import android.widget.FrameLayout;
 
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
+import com.mentor.ui.fragment.HomeFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,6 +35,16 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+        initialFragment();
+    }
+
+    private void initialFragment()
+    {
+        HomeFragment homeFragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.dashboard_content, homeFragment);
+        transaction.commit();
     }
 
 
@@ -44,6 +58,8 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
                         return true;
                     }
                 });
+
+
     }
 
     @Override
@@ -54,4 +70,15 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
