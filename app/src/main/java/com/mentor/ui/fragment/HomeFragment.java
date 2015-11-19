@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listener.onToolbarLoaded(toolbar);
-        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video, 16));
+        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video,10));
 
         searchViewContainer.handleToolbarAnimation(toolbar);
         searchViewContainer.setExpandedContentFragment(getActivity(), new SearchFragment());
