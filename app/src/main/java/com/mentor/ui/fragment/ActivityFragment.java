@@ -1,11 +1,11 @@
 package com.mentor.ui.fragment;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,42 +13,46 @@ import android.view.ViewGroup;
 
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
+import com.mentor.ui.adapters.TabFragmentAdapter;
 import com.mentor.util.ViewUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import xyz.sahildave.widget.SearchViewLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class HomeFragment extends Fragment {
+public class ActivityFragment extends Fragment {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.tabs)
+    TabLayout tabs;
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.list)
-    RecyclerView list;
-    @Bind(R.id.search_view_container)
-    SearchViewLayout searchViewContainer;
     private FragmentToolbarListener listener;
+    private TabFragmentAdapter fragmentAdapter;
 
 
-    public HomeFragment() {
+    public ActivityFragment() {
         // Required empty public constructor
     }
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_activity, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -65,12 +69,28 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listener.onToolbarLoaded(toolbar);
-        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video, 16));
-
-        searchViewContainer.handleToolbarAnimation(toolbar);
-        searchViewContainer.setExpandedContentFragment(getActivity(), new SearchFragment());
+        if (viewPager != null) {
+            setupViewPager(viewPager);
+        }
+        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video));
+        tabs.setupWithViewPager(viewPager);
 
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+         fragmentAdapter = new TabFragmentAdapter(getChildFragmentManager());
+        fragmentAdapter.addFragment(new TimelineFragment(), "Timeline");
+        fragmentAdapter.addFragment(new DiscoverFragment(), "Discover");
+        viewPager.setAdapter(fragmentAdapter);
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
 
     @Override
     public void onDestroyView() {

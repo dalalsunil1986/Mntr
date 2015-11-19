@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
+import com.mentor.ui.fragment.ActivityFragment;
 import com.mentor.ui.fragment.HomeFragment;
 
 import butterknife.Bind;
@@ -40,10 +41,10 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
 
     private void initialFragment()
     {
-        HomeFragment homeFragment = new HomeFragment();
+        HomeFragment activityFragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.dashboard_content, homeFragment);
+        transaction.add(R.id.dashboard_content, activityFragment);
         transaction.commit();
     }
 
