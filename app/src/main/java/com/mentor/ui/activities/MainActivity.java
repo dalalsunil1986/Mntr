@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        applicationComponent().inject(this);
 
         if (navigationView != null) {
             setupDrawerContent(navigationView);

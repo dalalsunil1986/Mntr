@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.facebook.appevents.AppEventsLogger;
 import com.mentor.MentorApp;
 import com.mentor.injection.component.ApplicationComponent;
 
@@ -25,4 +26,22 @@ public class BaseActivity extends AppCompatActivity {
     protected ApplicationComponent applicationComponent() {
         return MentorApp.get(this).getComponent();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
+    }
+
+
 }

@@ -24,9 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.LoginActivitiy" />
         <activity android:name=".ui.activities.BaseActivity" />
-        <activity android:name=".ui.activities.MentorSessionActivity"></activity>
+        <activity android:name=".ui.activities.MentorSessionActivity" />
+        <activity android:name=".ui.activities.LoginActivity" />
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

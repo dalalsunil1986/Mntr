@@ -19,4 +19,20 @@ public class SnackBarFactory {
         group.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         return snackbar;
     }
+
+    /*
+     Returns a null snackbar if internet is available else returns one wih
+     message.
+     */
+    public static Snackbar checkConnectivitySnackbar(Context context,View view)
+    {
+        if(NetworkUtil.isNetworkConnected(context))
+        {
+            return null;
+        }
+        else
+        {
+            return createSnackbar(context,view,R.string.no_internet);
+        }
+    }
 }
