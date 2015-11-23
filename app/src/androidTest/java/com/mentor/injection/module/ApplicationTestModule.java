@@ -4,9 +4,7 @@ import android.app.Application;
 
 import com.mentor.api.MentorApiService;
 import com.mentor.api.MentorTokenService;
-import com.mentor.api.RetrofitHelper;
 import com.mentor.core.PreferenceManager;
-import com.mentor.db.Migration;
 
 import javax.inject.Singleton;
 

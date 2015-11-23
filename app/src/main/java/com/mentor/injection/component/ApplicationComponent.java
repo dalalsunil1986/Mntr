@@ -22,4 +22,5 @@ public interface ApplicationComponent {
     void inject(LoginActivity loginActivitiy);
     void inject(RetrofitHelper retrofitHelper);
     void inject(MentorErrorHandler mentorErrorHandler);
+
 }

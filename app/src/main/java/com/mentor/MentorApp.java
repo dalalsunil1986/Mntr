@@ -56,7 +56,7 @@ public class MentorApp extends Application implements GcmListener {
 
     // Needed to replace the component with a test specific one
     public void setComponent(ApplicationComponent applicationComponent) {
-        applicationComponent = applicationComponent;
+        this.applicationComponent = applicationComponent;
     }
 
     /*

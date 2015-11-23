@@ -94,6 +94,7 @@ dependencies {
     androidTestCompile "com.android.support.test.espresso:espresso-intents:${ESPRESSO_VERSION}"
     androidTestCompile "com.google.dexmaker:dexmaker:${DEXMAKER_VERSION}"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:${DEXMAKER_VERSION}"
+    androidTestCompile 'com.squareup.retrofit:retrofit-mock:1.9.0'
     //noinspection GradleCompatible
 
     compile "org.parceler:parceler-api:$PARCELER_VERSION"
