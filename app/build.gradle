@@ -127,4 +127,6 @@ dependencies {
     compile 'xyz.sahildave:searchviewlayout:0.0.2'
     compile 'com.flipboard:bottomsheet-core:1.4.3'
     compile 'com.flipboard:bottomsheet-commons:1.4.3'
+    compile 'com.pubnub:pubnub-android:3.7.5'
+
 }

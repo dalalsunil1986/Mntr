@@ -30,7 +30,12 @@
         <activity
             android:name=".ui.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
+        <service
+            android:name=".services.NotificationService"
+            android:enabled="false"
+            android:exported="false"></service>
     </application>
 
 </manifest>

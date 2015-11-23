@@ -6,7 +6,6 @@ import android.content.Intent;
 
 import com.facebook.login.LoginManager;
 import com.mentor.MentorApp;
-import com.mentor.ui.activities.LoginActivitiy;
 
 import javax.inject.Inject;
 
@@ -42,9 +41,7 @@ public class MentorErrorHandler implements ErrorHandler {
             LoginManager.getInstance().logOut();
             preferenceManager.clear();
 
-            Intent myIntent = new Intent(app, LoginActivitiy.class);
-            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            app.startActivity(myIntent);
+           //broadcast receiver
 
         } else if (cause.getResponse().getStatus() == 404) {
             errorDescription = "Item was not found.";

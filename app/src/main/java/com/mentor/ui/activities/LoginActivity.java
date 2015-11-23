@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
     }
 
     @OnClick(R.id.facebook_login)
-    private void facebookLogin() {
+    public void facebookLogin() {
         if (SnackBarFactory.checkConnectivitySnackbar(this,coordinator)==null)
         {
             LoginManager.getInstance().logInWithReadPermissions(this, permissionsNeeded);
