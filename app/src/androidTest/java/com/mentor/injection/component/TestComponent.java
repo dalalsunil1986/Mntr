@@ -1,7 +1,6 @@
 package com.mentor.injection.component;
 
 import com.mentor.injection.module.ApplicationTestModule;
-import com.mentor.util.MockRetrofitHelper;
 
 import javax.inject.Singleton;
 
