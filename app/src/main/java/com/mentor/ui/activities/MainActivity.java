@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
 
     private void initialFragment()
     {
-        HomeFragment activityFragment = new HomeFragment();
+        ActivityFragment activityFragment = new ActivityFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.dashboard_content, activityFragment);

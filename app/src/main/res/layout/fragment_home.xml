@@ -20,7 +20,6 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_scrollFlags="scroll|enterAlways|snap" />
 
-        <include layout="@layout/widget_search_bar"/>
 
         </android.support.design.widget.AppBarLayout>
 

@@ -18,7 +18,6 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import xyz.sahildave.widget.SearchViewLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +30,6 @@ public class HomeFragment extends Fragment {
     FloatingActionButton fab;
     @Bind(R.id.list)
     RecyclerView list;
-    @Bind(R.id.search_view_container)
-    SearchViewLayout searchViewContainer;
     private FragmentToolbarListener listener;
 
 
@@ -66,9 +63,6 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         listener.onToolbarLoaded(toolbar);
         fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video,10));
-
-        searchViewContainer.handleToolbarAnimation(toolbar);
-        searchViewContainer.setExpandedContentFragment(getActivity(), new SearchFragment());
 
     }
 

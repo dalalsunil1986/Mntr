@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mentor.R;
-import com.opentok.android.Publisher;
-import com.opentok.android.Session;
+
 
 public class MentorSessionActivity extends AppCompatActivity {
 

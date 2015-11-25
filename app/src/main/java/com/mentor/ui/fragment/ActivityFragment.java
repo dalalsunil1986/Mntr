@@ -2,6 +2,7 @@ package com.mentor.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,8 @@ public class ActivityFragment extends Fragment {
     ViewPager viewPager;
     @Bind(R.id.fab)
     FloatingActionButton fab;
+    @Bind(R.id.main_content)
+    CoordinatorLayout mainContent;
     private FragmentToolbarListener listener;
     private TabFragmentAdapter fragmentAdapter;
 
@@ -72,13 +75,14 @@ public class ActivityFragment extends Fragment {
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
+
         fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video));
         tabs.setupWithViewPager(viewPager);
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
-         fragmentAdapter = new TabFragmentAdapter(getChildFragmentManager());
+        fragmentAdapter = new TabFragmentAdapter(getChildFragmentManager());
         fragmentAdapter.addFragment(new TimelineFragment(), "Timeline");
         fragmentAdapter.addFragment(new DiscoverFragment(), "Discover");
         viewPager.setAdapter(fragmentAdapter);

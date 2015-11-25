@@ -5,11 +5,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.text.format.DateFormat;
 import android.util.Log;
+
+import com.mentor.core.HeartbeatService;
 
 
 /**
