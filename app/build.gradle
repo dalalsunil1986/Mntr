@@ -98,6 +98,7 @@ dependencies {
     compile "org.parceler:parceler-api:$PARCELER_VERSION"
     apt "org.parceler:parceler:$PARCELER_VERSION"
 
+    compile project(':libstreaming')
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar') {
