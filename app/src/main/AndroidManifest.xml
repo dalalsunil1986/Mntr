@@ -49,7 +49,11 @@
         <activity
             android:name=".ui.activities.StreamActivity"
             android:label="@string/title_activity_stream"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
+        <service
+            android:name=".services.AlarmService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
