@@ -53,7 +53,12 @@
 
         <service
             android:name=".services.AlarmService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

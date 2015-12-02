@@ -132,5 +132,5 @@ dependencies {
     compile 'com.pubnub:pubnub-android:3.7.5'
     compile 'com.anupcowkur:reservoir:2.1'
     compile 'com.github.arimorty:floatingsearchview:1.0.2'
-
+    //compile 'com.algolia:algoliasearch-android:2.+@aar'
     }

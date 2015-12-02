@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.mentor.ui.activities.SearchActivity">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/floating_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
+            app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
+            app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
+            app:floatingSearch_showMenuAction="true"
+            app:floatingSearch_searchHint="Search Mentor..."
+            app:floatingSearch_voiceRecHint="Say something..."
+            app:floatingSearch_showSearchHintWhenNotFocused="true"
+            app:floatingSearch_showVoiceInput="true"
+            app:floatingSearch_showOverFlowMenu="false"
+            app:floatingSearch_hideOverflowMenuWhenFocused="true"
+            app:floatingSearch_showSearchKey="false"
+            app:floatingSearch_dismissOnOutsideTouch="true"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="fill_parent"
+            android:id="@+id/results"
+            android:layout_height="fill_parent"></android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
