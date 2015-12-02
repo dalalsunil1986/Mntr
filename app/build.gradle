@@ -33,37 +33,24 @@ android {
         }
     }
 
-    productFlavors {
-
-        armv7 {
-            ndk {
-                abiFilters "armeabi-v7a"
-            }
-        }
-
-        x86{
-            ndk{
-                abiFilters "x86"
-            }
-        }
-
-    }
 
 }
 
 repositories {
-    maven { url "https://jitpack.io" }
     maven {
         url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'
     }
     maven {
         url "https://mint.splunk.com/gradle/"
     }
+    maven { url "https://jitpack.io" }
+    maven { url "https://github.com" }
+
 
 }
 
 dependencies {
-    final SUPPORT_LIBRARY_VERSION = '23.1.0'
+    final SUPPORT_LIBRARY_VERSION = '23.1.1'
     final DAGGER_VERSION = '2.0.1'
     final MOCKITO_VERSION = '1.10.19'
     final DEXMAKER_VERSION = '1.2'
@@ -115,6 +102,7 @@ dependencies {
     apt "org.parceler:parceler:$PARCELER_VERSION"
 
     compile files('libs/red5streaming.jar')
+    compile project(':material-camera')
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar') {
@@ -126,12 +114,11 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.github.hotchemi:permissionsdispatcher:1.2.1@aar'
     //compile 'com.google.android.exoplayer:exoplayer:r1.5.2'
     compile 'io.realm:realm-android:0.84.1'
+    compile 'com.karumi:dexter:2.1.2'
     compile 'com.github.deano2390:MaterialShowcaseView:1.0.5'
     compile 'com.jakewharton.timber:timber:4.1.0'
-    apt 'com.github.hotchemi:permissionsdispatcher-processor:1.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.android.gms:play-services-analytics:7.8.0'
     //compile "com.splunk.mint:mint:4.3.0"
@@ -144,4 +131,6 @@ dependencies {
     compile 'com.flipboard:bottomsheet-commons:1.4.3'
     compile 'com.pubnub:pubnub-android:3.7.5'
     compile 'com.anupcowkur:reservoir:2.1'
-}
+    compile 'com.github.arimorty:floatingsearchview:1.0.2'
+
+    }
