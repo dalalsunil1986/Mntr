@@ -9,28 +9,14 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <com.arlib.floatingsearchview.FloatingSearchView
-            android:id="@+id/floating_search_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
-            app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
-            app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
-            app:floatingSearch_showMenuAction="true"
-            app:floatingSearch_searchHint="Search Mentor..."
-            app:floatingSearch_voiceRecHint="Say something..."
-            app:floatingSearch_showSearchHintWhenNotFocused="true"
-            app:floatingSearch_showVoiceInput="true"
-            app:floatingSearch_showOverFlowMenu="false"
-            app:floatingSearch_hideOverflowMenuWhenFocused="true"
-            app:floatingSearch_showSearchKey="false"
-            app:floatingSearch_dismissOnOutsideTouch="true"
-            />
         <android.support.v7.widget.RecyclerView
             android:layout_width="fill_parent"
             android:id="@+id/results"
             android:layout_height="fill_parent"></android.support.v7.widget.RecyclerView>
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 
