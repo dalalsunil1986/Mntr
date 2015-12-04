@@ -1,60 +1,46 @@
 package com.mentor.ui.activities;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
 import com.mentor.R;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import xyz.sahildave.widget.SearchViewLayout;
 
 public class SearchActivity extends BaseActivity {
 
-    @Bind(R.id.results)
-    RecyclerView results;
-    @Bind(R.id.search_view)
-    MaterialSearchView searchView;
 
+    @Bind(R.id.search_view_container)
+    SearchViewLayout searchViewContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
-
-        searchView.showSearch(false);
-        searchView.findViewById(com.miguelcatalan.materialsearchview.R.id.action_up_btn)
-        .setOnClickListener(new View.OnClickListener() {
+        searchViewContainer.expand(true);
+        searchViewContainer.setExpandedContentFragment(this, new Fragment());
+        searchViewContainer.setSearchListener(new SearchViewLayout.SearchListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void onFinished(String searchKeyword) {
+
             }
         });
-        searchView.setVoiceSearch(true);
-        searchView.showVoice(true);
 
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.showSearch(false);
-                searchView.setQuery(query,false);
+        ViewGroup mExpanded = (ViewGroup) searchViewContainer.findViewById(xyz.sahildave.widget.R.id.search_expanded_root);
+        mExpanded.findViewById(xyz.sahildave.widget.R.id.search_expanded_back_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
 
 
-                Toast.makeText(SearchActivity.this,query,Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
 
     }
-
-
 }

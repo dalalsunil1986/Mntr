@@ -1,2 +1,1 @@
-include ':app', ':material-camera'
-project(':material-camera').projectDir = new File('app/libs/material-camera')
+include ':app'
