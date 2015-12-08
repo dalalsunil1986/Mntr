@@ -1,5 +1,6 @@
 package com.mentor.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -102,6 +103,9 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+
+                                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent);
                                 }
 
                                 @Override

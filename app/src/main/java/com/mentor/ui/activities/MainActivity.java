@@ -17,6 +17,7 @@ import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
 import com.mentor.ui.fragment.ActivityFragment;
 import com.mentor.ui.fragment.HomeFragment;
+import com.mentor.ui.fragment.WakieFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,10 +45,10 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
 
     private void initialFragment()
     {
-        ActivityFragment activityFragment = new ActivityFragment();
+        WakieFragment wakieFragment = new WakieFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.dashboard_content, activityFragment);
+        transaction.add(R.id.dashboard_content, wakieFragment);
         transaction.commit();
     }
 
