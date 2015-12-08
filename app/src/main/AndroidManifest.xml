@@ -58,7 +58,11 @@
         <activity
             android:name=".ui.activities.SearchActivity"
             android:label="@string/title_activity_search"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
+        <service
+            android:name=".services.FbProfilePhotoService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

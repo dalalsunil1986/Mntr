@@ -19,6 +19,7 @@ import com.mentor.api.MentorTokenService;
 import com.mentor.api.models.BearerToken;
 import com.mentor.core.PreferenceManager;
 import com.mentor.injection.component.ApplicationComponent;
+import com.mentor.services.FbProfilePhotoService;
 import com.mentor.util.SnackBarFactory;
 
 import org.json.JSONException;
@@ -56,6 +57,9 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         applicationComponent().inject(this);
+
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, this);
 
         authDialog = new MaterialDialog.Builder(this)
                 .title(R.string.authenticating)
@@ -104,6 +108,14 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                                         e.printStackTrace();
                                     }
 
+                                    Intent profilePhotoService = new Intent(LoginActivity.this, FbProfilePhotoService.class);
+                                    try {
+                                        profilePhotoService.putExtra("id",object.getString("id"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    startService(profilePhotoService);
+
                                     Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                 }
@@ -117,7 +129,6 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                 }
             }
         });
-
 
     }
 
