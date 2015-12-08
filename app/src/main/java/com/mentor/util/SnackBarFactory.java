@@ -20,6 +20,14 @@ public class SnackBarFactory {
         return snackbar;
     }
 
+    public static Snackbar createSnackbar(Context context, View view,String message) {
+        Snackbar snackbar = Snackbar.make(view,message, Snackbar.LENGTH_SHORT);
+        ViewGroup group = (ViewGroup) snackbar.getView();
+        group.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        return snackbar;
+    }
+
+
     /*
      Returns a null snackbar if internet is available else returns one wih
      message.

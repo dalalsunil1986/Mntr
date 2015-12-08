@@ -15,10 +15,12 @@ import com.facebook.login.LoginResult;
 import com.mentor.MentorApp;
 import com.mentor.R;
 import com.mentor.api.MentorTokenService;
+import com.mentor.api.models.BearerToken;
 import com.mentor.core.PreferenceManager;
 import com.mentor.injection.component.ApplicationComponent;
 import com.mentor.util.SnackBarFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -29,6 +31,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity implements FacebookCallback {
 
@@ -77,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
 
         GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
+            public void onCompleted(final JSONObject object, GraphResponse response) {
 
                 if(response.getError()!=null)
                 {
@@ -85,7 +90,25 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                 }
                 else
                 {
+                    mentorTokenService.fetchBearerToken("password", loginResult.getAccessToken().getToken(),
+                            "android", "", "", "facebook", new Callback<BearerToken>() {
+                                @Override
+                                public void success(BearerToken bearerToken, Response response) {
 
+                                    preferenceManager.setBearerToken(bearerToken.getToken());
+                                    preferenceManager.setLoggedInStatus(true);
+                                    try {
+                                        preferenceManager.setUser(object.getString("name").split("\\s+")[0], object.getString("name").split("\\s+")[1]);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,R.string.something_wrong);
+                                }
+                            });
 
                 }
             }
@@ -101,6 +124,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
 
     @Override
     public void onError(FacebookException error) {
+        SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,error.getLocalizedMessage());
 
     }
 

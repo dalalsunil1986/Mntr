@@ -15,5 +15,5 @@ public interface MentorTokenService {
     String TEST_ENDPOINT="http://getmentorapptest.azurewebsites.net";
 
     @FormUrlEncoded
-    @POST("/token") void fetchBearerToken(@Field("grant_type") String grantType, @Field("accessToken") String facebookAccessToken,@Field("deviceType")String deviceType,@Field("deviceId")String deviceId,@Field("pushId")String pushId,Callback<BearerToken> bearerTokenCallback);
+    @POST("/token") void fetchBearerToken(@Field("grant_type") String grantType, @Field("accessToken") String facebookAccessToken,@Field("deviceType")String deviceType,@Field("deviceId")String deviceId,@Field("pushId")String pushId,@Field("accountType")String accountType,Callback<BearerToken> bearerTokenCallback);
 }

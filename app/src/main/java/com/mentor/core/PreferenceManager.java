@@ -7,32 +7,82 @@ import android.content.SharedPreferences;
  * Created by Joel on 11/11/2015.
  */
 public class PreferenceManager {
-    private static SharedPreferences mPref;
+    private static SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     public static final String PREF_FILE_NAME = "mentor_preferences";
+    public static final String KEY_FIRST ="first_name";
+    public static final String KEY_LAST ="last_name";
+    private static final String IS_LOGIN = "IsLoggedIn";
+    private static final String KEY_BEARER = "bearer";
+    private static final String KEY_EMAIL = "email";
 
 
     public PreferenceManager(Context context) {
-        mPref = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        editor = this.preferences.edit();
     }
 
-    public String getUserFacebookId()
+    public void clear() {
+        preferences.edit().clear().apply();
+    }
+
+    public void setUser(String firstName,String lastName)
     {
-        return "";
+        editor.putString(KEY_FIRST,firstName);
+        editor.putString(KEY_LAST, lastName);
+        editor.commit();
     }
 
     public String getName()
     {
-        return "";
+        return preferences.getString(KEY_FIRST,"") +" " + preferences.getString(KEY_LAST,"");
     }
 
     public String getBearerToken()
     {
-        return "";
+        return preferences.getString(KEY_BEARER,"");
     }
 
-    public void clear() {
-        mPref.edit().clear().apply();
+    public void setBearerToken(String bearerToken)
+    {
+        editor.putString(KEY_BEARER,bearerToken);
+        editor.commit();
+
     }
+
+    public String getEmail()
+    {
+        return preferences.getString(KEY_EMAIL,"");
+    }
+
+    public void setEmail(String email)
+    {
+        editor.putString(KEY_EMAIL,email);
+        editor.commit();
+
+    }
+
+    /**
+     * Checks to see if the user is logged in.
+     * @return
+     */
+
+    public boolean isLoggedIn()
+    {
+        return preferences.getBoolean(IS_LOGIN, false);
+    }
+
+    /**
+     * sets current status of user.
+     * @param status
+     */
+    public void setLoggedInStatus(boolean status)
+    {
+        editor.putBoolean(IS_LOGIN, status);
+        editor.commit();
+    }
+
+
 
 }
