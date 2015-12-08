@@ -43,7 +43,6 @@ public class RetrofitHelper
 
                 request.addHeader("Authorization", "Bearer " + preferenceManager.getBearerToken());
                 request.addHeader("User", preferenceManager.getName());
-                request.addHeader("UserFacebookId", preferenceManager.getUserFacebookId());
             }
         };
 
