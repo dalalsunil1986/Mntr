@@ -1,45 +1,38 @@
 package com.mentor.ui.activities;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mentor.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import xyz.sahildave.widget.SearchViewLayout;
 
 public class SearchActivity extends BaseActivity {
 
 
-    @Bind(R.id.search_view_container)
-    SearchViewLayout searchViewContainer;
+    @Bind(R.id.floating_search_view)
+    FloatingSearchView floatingSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
-        searchViewContainer.expand(true);
-        searchViewContainer.setExpandedContentFragment(this, new Fragment());
-        searchViewContainer.setSearchListener(new SearchViewLayout.SearchListener() {
-            @Override
-            public void onFinished(String searchKeyword) {
 
+        floatingSearchView.setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
+            @Override
+            public void onHomeClicked() {
+                onBackPressed();
             }
         });
 
-        ViewGroup mExpanded = (ViewGroup) searchViewContainer.findViewById(xyz.sahildave.widget.R.id.search_expanded_root);
-        mExpanded.findViewById(xyz.sahildave.widget.R.id.search_expanded_back_button)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                });
+        floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
 
+            }
+        });
 
 
     }

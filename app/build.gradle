@@ -130,7 +130,7 @@ dependencies {
     compile 'com.flipboard:bottomsheet-commons:1.4.3'
     compile 'com.pubnub:pubnub-android:3.7.5'
     compile 'com.anupcowkur:reservoir:2.1'
-    compile 'xyz.sahildave:searchviewlayout:0.2'
+    compile 'com.github.arimorty:floatingsearchview:1.1.0'
     //compile 'com.algolia:algoliasearch-android:2.+@aar'
 
     }
