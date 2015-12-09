@@ -36,7 +36,8 @@ public class PreferenceManager {
 
     public String getName()
     {
-        return preferences.getString(KEY_FIRST,"") +" " + preferences.getString(KEY_LAST,"");
+        //return preferences.getString(KEY_FIRST,"") +" " + preferences.getString(KEY_LAST,"");
+        return "Joel Dean";
     }
 
     public String getBearerToken()
