@@ -18,6 +18,8 @@ import com.mentor.listeners.FragmentToolbarListener;
 import com.mentor.ui.fragment.ActivityFragment;
 import com.mentor.ui.fragment.HomeFragment;
 import com.mentor.ui.fragment.WakieFragment;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,10 +27,9 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity implements FragmentToolbarListener {
     @Bind(R.id.dashboard_content)
     FrameLayout dashboardContent;
-    @Bind(R.id.nav_view)
-    NavigationView navigationView;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
+
+    Drawer result;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         applicationComponent().inject(this);
-
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
-        }
+        result = new DrawerBuilder().withActivity(this).build();
         initialFragment();
     }
 
@@ -53,19 +51,9 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
     }
 
 
-    private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
 
 
-    }
+
 
     @Override
     public void onToolbarLoaded(Toolbar toolbar) {
@@ -74,14 +62,12 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
+        result.setToolbar(this,toolbar);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
 
             case R.id.action_search:
                 Intent intent = new Intent(this,SearchActivity.class);
