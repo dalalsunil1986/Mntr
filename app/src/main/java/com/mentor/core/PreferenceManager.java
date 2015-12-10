@@ -36,8 +36,7 @@ public class PreferenceManager {
 
     public String getName()
     {
-        //return preferences.getString(KEY_FIRST,"") +" " + preferences.getString(KEY_LAST,"");
-        return "Joel Dean";
+        return preferences.getString(KEY_FIRST,"") +" " + preferences.getString(KEY_LAST,"");
     }
 
     public String getBearerToken()
@@ -81,6 +80,12 @@ public class PreferenceManager {
     public void setLoggedInStatus(boolean status)
     {
         editor.putBoolean(IS_LOGIN, status);
+        editor.commit();
+    }
+
+    public void logout()
+    {
+        editor.clear();
         editor.commit();
     }
 

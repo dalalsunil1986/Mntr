@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.anupcowkur.reservoir.Reservoir;
+import com.facebook.FacebookSdk;
 import com.google.gson.GsonBuilder;
 import com.mentor.core.DateTimeConverter;
 import com.mentor.injection.component.ApplicationComponent;
@@ -45,6 +46,12 @@ public class MentorApp extends Application implements GcmListener {
         fontsInit();
         reservoirInit();
         imageLoadingInit();
+        fbInit();
+    }
+
+    private void fbInit()
+    {
+        FacebookSdk.sdkInitialize(this);
     }
 
     private void imageLoadingInit()

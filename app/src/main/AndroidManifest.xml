@@ -23,8 +23,14 @@
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider1712308888999292"
+            android:authorities="com.facebook.app.FacebookContentProvider776735112454539"
             android:exported="true" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
@@ -34,7 +40,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.BaseActivity" />
-        <activity android:name=".ui.activities.MentorSessionActivity" />
         <activity android:name=".ui.activities.LoginActivity" />
         <activity
             android:name=".ui.activities.SettingsActivity"
@@ -45,11 +50,6 @@
             android:name=".services.NotificationService"
             android:enabled="false"
             android:exported="false" />
-
-        <activity
-            android:name=".ui.activities.StreamActivity"
-            android:label="@string/title_activity_stream"
-            android:theme="@style/AppTheme" />
 
         <service
             android:name=".services.AlarmService"

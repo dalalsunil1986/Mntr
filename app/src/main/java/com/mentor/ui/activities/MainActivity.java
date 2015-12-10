@@ -1,6 +1,7 @@
 package com.mentor.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.mentor.R;
+import com.mentor.core.Extension;
+import com.mentor.core.FileManager;
+import com.mentor.core.MediaType;
 import com.mentor.core.PreferenceManager;
 import com.mentor.listeners.FragmentToolbarListener;
 import com.mentor.ui.fragment.ActivityFragment;
@@ -33,6 +37,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -59,19 +65,31 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         initialFragment();
     }
 
-    private void setupDrawer()
-    {
+    private void setupDrawer() {
+        ProfileDrawerItem profile;
+        File profilePic = FileManager.get("profile", this, MediaType.ProfilePic, Extension.JPEG);
+
+        if (profilePic == null) {
+            profile = new ProfileDrawerItem().withName(preferenceManager.getName());
+
+        } else {
+            Bitmap bitmap = GeneralUtils.getBitmapFromFile(profilePic);
+
+            profile = new ProfileDrawerItem().withName(preferenceManager.getName()).withIcon(bitmap);
+
+        }
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.nav)
                 .addProfiles(
-                        new ProfileDrawerItem().withName(preferenceManager.getName()).withIcon(GeneralUtils.facebookPicture("605305661"))
+                        profile
                 )
 
                 .build();
 
         PrimaryDrawerItem wakies = new PrimaryDrawerItem().withName(R.string.drawer_item_wakies).withIcon(CommunityMaterial.Icon.cmd_clock);
-        PrimaryDrawerItem notifications = new PrimaryDrawerItem().withName(R.string.drawer_item_notifications).withIcon(CommunityMaterial.Icon.cmd_comment_alert);;
+        PrimaryDrawerItem notifications = new PrimaryDrawerItem().withName(R.string.drawer_item_notifications).withIcon(CommunityMaterial.Icon.cmd_comment_alert);
+        ;
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(CommunityMaterial.Icon.cmd_settings);
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(CommunityMaterial.Icon.cmd_logout);
 
@@ -79,7 +97,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
                 .withActivity(this)
                 .withAccountHeader(headerResult)
                 .withActionBarDrawerToggleAnimated(true)
-                .addDrawerItems(wakies, notifications,new DividerDrawerItem(), settings, logout)
+                .addDrawerItems(wakies, notifications, new DividerDrawerItem(), settings, logout)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -89,18 +107,13 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
                 .build();
     }
 
-    private void initialFragment()
-    {
+    private void initialFragment() {
         WakieFragment wakieFragment = new WakieFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.dashboard_content, wakieFragment);
         transaction.commit();
     }
-
-
-
-
 
 
     @Override
@@ -110,7 +123,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         final ActionBar ab = getSupportActionBar();
         //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
-        result.setToolbar(this,toolbar);
+        result.setToolbar(this, toolbar);
     }
 
     @Override
@@ -118,7 +131,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         switch (item.getItemId()) {
 
             case R.id.action_search:
-                Intent intent = new Intent(this,SearchActivity.class);
+                Intent intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
                 return true;
         }

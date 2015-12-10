@@ -2,7 +2,7 @@
     <string name="app_name">Mentor</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="easygcm_sender_id">1082451694502</string>
-    <string name="facebook_app_id">1712308888999292</string>
+    <string name="facebook_app_id">776735112454539</string>
     <string name="drawer_item_mentorcast">Mentorcasts</string>
     <string name="drawer_item_profile">My Profile</string>
     <string name="drawer_item_notifications">Notifications</string>
