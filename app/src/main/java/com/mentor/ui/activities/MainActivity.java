@@ -1,6 +1,7 @@
 package com.mentor.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +23,7 @@ import com.mentor.ui.fragment.HomeFragment;
 import com.mentor.ui.fragment.WakieFragment;
 import com.mentor.util.GeneralUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -69,7 +71,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
                 .build();
 
         PrimaryDrawerItem wakies = new PrimaryDrawerItem().withName(R.string.drawer_item_wakies).withIcon(CommunityMaterial.Icon.cmd_clock);
-        PrimaryDrawerItem notifications = new PrimaryDrawerItem().withName(R.string.drawer_item_notifications).withIcon(CommunityMaterial.Icon.cmd_comment_alert);
+        PrimaryDrawerItem notifications = new PrimaryDrawerItem().withName(R.string.drawer_item_notifications).withIcon(CommunityMaterial.Icon.cmd_comment_alert);;
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(CommunityMaterial.Icon.cmd_settings);
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(CommunityMaterial.Icon.cmd_logout);
 
@@ -106,7 +108,7 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
         result.setToolbar(this,toolbar);
     }
@@ -126,6 +128,9 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.getItem(0)
+                .setIcon(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_magnify)
+                        .colorRes(android.R.color.white).sizeDp(20));
         return true;
     }
 

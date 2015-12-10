@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
 import com.mentor.ui.adapters.TabFragmentAdapter;
-import com.mentor.util.ViewUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 
 import butterknife.Bind;
@@ -76,7 +75,6 @@ public class ActivityFragment extends Fragment {
             setupViewPager(viewPager);
         }
 
-        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video));
         tabs.setupWithViewPager(viewPager);
 
     }

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
-import com.mentor.util.ViewUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 
 import butterknife.Bind;
@@ -62,7 +61,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listener.onToolbarLoaded(toolbar);
-        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_video,10));
 
     }
 

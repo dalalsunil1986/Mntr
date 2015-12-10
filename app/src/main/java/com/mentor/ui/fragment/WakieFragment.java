@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
 import com.mentor.ui.adapters.TabFragmentAdapter;
-import com.mentor.util.ViewUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -75,12 +75,12 @@ public class WakieFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        toolbar.setTitle("Wakies");
         listener.onToolbarLoaded(toolbar);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        fab.setImageDrawable(ViewUtils.getMaterialIcon(getActivity(), CommunityMaterial.Icon.cmd_plus));
         tabs.setupWithViewPager(viewPager);
 
     }

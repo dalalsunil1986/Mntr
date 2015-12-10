@@ -4,6 +4,5 @@
     <item android:id="@+id/action_voice_rec"
         android:title="Filter"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_done"
         app:showAsAction="always"
         /></menu>
