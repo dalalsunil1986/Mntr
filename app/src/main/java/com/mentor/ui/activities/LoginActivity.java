@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
 
     @Override
     public void onSuccess(Object o) {
-        authDialog.show();
         final LoginResult loginResult = (LoginResult) o;
 
         GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -104,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                 }
                 else
                 {
+                    authDialog.show();
                     mentorTokenService.fetchBearerToken("password", loginResult.getAccessToken().getToken(),
                             "android","", "", "facebook", new Callback<BearerToken>() {
                                 @Override
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
 
                 }
             }
-        });
+        }).executeAsync();
 
     }
 

@@ -5,6 +5,6 @@ package com.mentor.api;
  */
 public interface  MentorApiService {
     String ENDPOINT ="http://getmentorapp.azurewebsites.net/api/";
-    String TEST_ENDPOINT="http://getmentorapptest.azurewebsites.net/api/";
+    String TEST_ENDPOINT="http://getmentorapp.azurewebsites.net/api/";
 
 }

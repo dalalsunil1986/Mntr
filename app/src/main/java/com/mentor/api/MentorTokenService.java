@@ -12,7 +12,7 @@ import retrofit.http.POST;
  */
 public interface MentorTokenService {
     String ENDPOINT ="http://getmentorapp.azurewebsites.net";
-    String TEST_ENDPOINT="http://getmentorapptest.azurewebsites.net";
+    String TEST_ENDPOINT="http://getmentorapp.azurewebsites.net";
 
     @FormUrlEncoded
     @POST("/token") void fetchBearerToken(@Field("grant_type") String grantType, @Field("accessToken") String facebookAccessToken,@Field("deviceType")String deviceType,@Field("deviceId")String deviceId,@Field("pushId")String pushId,@Field("accountType")String accountType,Callback<BearerToken> bearerTokenCallback);
