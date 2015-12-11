@@ -37,6 +37,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 import java.io.File;
 
@@ -44,6 +45,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements FragmentToolbarListener {
     @Bind(R.id.dashboard_content)
@@ -87,11 +89,20 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
 
                 .build();
 
-        PrimaryDrawerItem wakies = new PrimaryDrawerItem().withName(R.string.drawer_item_wakies).withIcon(CommunityMaterial.Icon.cmd_clock);
-        PrimaryDrawerItem notifications = new PrimaryDrawerItem().withName(R.string.drawer_item_notifications).withIcon(CommunityMaterial.Icon.cmd_comment_alert);
+        PrimaryDrawerItem wakies = new PrimaryDrawerItem().withName(R.string.drawer_item_wakies)
+                .withIcon(CommunityMaterial.Icon.cmd_clock)
+                .withIdentifier(1);
+
+        PrimaryDrawerItem notifications = new PrimaryDrawerItem().withName(R.string.drawer_item_notifications)
+                .withIcon(CommunityMaterial.Icon.cmd_comment_alert)
+                .withIdentifier(2);
         ;
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(CommunityMaterial.Icon.cmd_settings);
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(CommunityMaterial.Icon.cmd_logout);
+        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName(R.string.drawer_item_settings)
+                .withIcon(CommunityMaterial.Icon.cmd_settings)
+                .withIdentifier(3);
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withName(R.string.drawer_item_logout)
+                .withIcon(CommunityMaterial.Icon.cmd_logout)
+                .withIdentifier(4);
 
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -101,6 +112,25 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+
+                        switch (drawerItem.getIdentifier())
+                        {
+                            case 1:
+
+
+                                break;
+
+                            case 2:
+
+                                break;
+
+                            case 3:
+
+                                break;
+                            case 4:
+                                logout();
+                                break;
+                        }
                         return false;
                     }
                 })
@@ -146,5 +176,6 @@ public class MainActivity extends BaseActivity implements FragmentToolbarListene
                         .colorRes(android.R.color.white).sizeDp(20));
         return true;
     }
+
 
 }

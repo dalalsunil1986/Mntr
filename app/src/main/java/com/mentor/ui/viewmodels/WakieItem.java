@@ -12,8 +12,9 @@ public class WakieItem {
     DateTime time;
     String mentorName;
     String mentorId;
-    boolean vibrate;
+    boolean vibrate=false;
     String wakieId;
+    DateTime date;
 
     public boolean isVibrate() {
         return vibrate;
@@ -53,5 +54,13 @@ public class WakieItem {
 
     public void setWakieId(String wakieId) {
         this.wakieId = wakieId;
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public void setDate(DateTime date) {
+        this.date = date;
     }
 }

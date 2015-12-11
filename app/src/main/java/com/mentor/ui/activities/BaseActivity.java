@@ -2,8 +2,10 @@ package com.mentor.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.facebook.AccessToken;
 import com.facebook.appevents.AppEventsLogger;
@@ -11,6 +13,7 @@ import com.facebook.login.LoginManager;
 import com.mentor.MentorApp;
 import com.mentor.core.PreferenceManager;
 import com.mentor.injection.component.ApplicationComponent;
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
 
 import javax.inject.Inject;
 
@@ -71,7 +74,13 @@ public class BaseActivity extends AppCompatActivity {
 
         startActivity(myIntent);
         return;
+    }
 
+    public void setToolbar(Toolbar toolbar)
+    {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 

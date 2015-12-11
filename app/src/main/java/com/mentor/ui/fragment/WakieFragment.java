@@ -2,6 +2,7 @@ package com.mentor.ui.fragment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -15,12 +16,14 @@ import android.view.ViewGroup;
 
 import com.mentor.R;
 import com.mentor.listeners.FragmentToolbarListener;
+import com.mentor.ui.activities.CreateWakieActivity;
 import com.mentor.ui.adapters.TabFragmentAdapter;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,6 +96,13 @@ public class WakieFragment extends Fragment {
         viewPager.setAdapter(fragmentAdapter);
     }
 
+    @OnClick(R.id.fab)
+    public void newWakie()
+    {
+        Intent intent=new Intent(getActivity(), CreateWakieActivity.class);
+        getActivity().startActivity(intent);
+    }
+
 
     @Override
     public void onDetach() {
@@ -106,4 +116,6 @@ public class WakieFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }
