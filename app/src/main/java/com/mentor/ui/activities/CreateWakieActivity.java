@@ -4,17 +4,23 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.mentor.R;
+import com.mentor.db.Wakie;
 import com.mentor.ui.viewmodels.WakieItem;
+import com.mentor.util.SnackBarFactory;
 import com.mentor.util.Spanny;
 
 import org.joda.time.DateTime;
@@ -22,9 +28,14 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.parceler.Parcels;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
@@ -46,6 +57,17 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
     TextView editMentor;
 
     DateTime now;
+    @Bind(R.id.save)
+    LinearLayout save;
+    @Bind(R.id.delete)
+    LinearLayout delete;
+    @Bind(R.id.mentor_layout)
+    RelativeLayout mentorLayout;
+    @Bind(R.id.coordinator)
+    CoordinatorLayout coordinator;
+
+    @Inject
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +151,36 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
 
         setUpWakie(wakieItem);
     }
+
+    public void saveAlarm() {
+        final DateTime alarmTime = new DateTime().withDate(wakieItem.getDate().toLocalDate()).withTime(wakieItem.getTime().toLocalTime());
+        if (alarmTime.isBeforeNow()) {
+
+            Snackbar snackbar = SnackBarFactory.createSnackbar(this, coordinator, R.string.time_passed);
+            snackbar.show();
+        } else {
+
+            final RealmResults<Wakie> results = realm.where(Wakie.class).findAllAsync();
+            results.addChangeListener(new RealmChangeListener() {
+                @Override
+                public void onChange() {
+
+                    for(Wakie wakie:results)
+                    {
+                        if (new DateTime(wakie.getTime()).isEqual(alarmTime)) {
+                            SnackBarFactory.createSnackbar(CreateWakieActivity.this,coordinator,"This alarm already exists.").show();
+                            //dialog.dismiss();
+                            return;
+                        }
+                    }
+                }
+            });
+
+
+
+        }
+    }
+
 }
 
 
