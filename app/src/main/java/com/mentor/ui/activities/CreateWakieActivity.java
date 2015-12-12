@@ -1,5 +1,7 @@
 package com.mentor.ui.activities;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -7,21 +9,26 @@ import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.mentor.R;
 import com.mentor.ui.viewmodels.WakieItem;
 import com.mentor.util.Spanny;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
-public class CreateWakieActivity extends BaseActivity {
+public class CreateWakieActivity extends BaseActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -38,6 +45,8 @@ public class CreateWakieActivity extends BaseActivity {
     @Bind(R.id.edit_mentor)
     TextView editMentor;
 
+    DateTime now;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +61,9 @@ public class CreateWakieActivity extends BaseActivity {
 
         ButterKnife.bind(this);
         applicationComponent().inject(this);
-
         setToolbar(toolbar);
+        now = DateTime.now();
+
 
         if (getIntent().hasExtra("wakie")) {
             wakieItem = Parcels.unwrap(getIntent().getParcelableExtra("wakie"));
@@ -61,7 +71,6 @@ public class CreateWakieActivity extends BaseActivity {
 
         } else {
             wakieItem = new WakieItem();
-            DateTime now = DateTime.now();
             DateTime futureTime = DateTime.now().plusHours(5).minusMinutes(now.getMinuteOfDay());
 
             wakieItem.setDate(futureTime);
@@ -87,4 +96,39 @@ public class CreateWakieActivity extends BaseActivity {
         editDate.setText(wakieItem.getDate().toString("MMMM d, yyyy"));
         editMentor.setText("Kristy Moreno");
     }
+
+    @OnClick(R.id.time_layout)
+    void timePicker() {
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, now.getHourOfDay(), now.getMinuteOfHour(), false);
+        timePickerDialog.show();
+    }
+
+    @OnClick(R.id.date_layout)
+    void showDatePicker() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm");
+        wakieItem.setTime(dateStringFormat.parseDateTime(hourOfDay + ":" + minute));
+
+        setUpWakie(wakieItem);
+
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("MM/dd/yyyy");
+        wakieItem.setDate(dateStringFormat.parseDateTime(monthOfYear + 1 + "/" + dayOfMonth + "/" + year));
+
+        setUpWakie(wakieItem);
+    }
 }
+
+
