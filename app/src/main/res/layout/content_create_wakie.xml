@@ -12,11 +12,11 @@
     tools:showIn="@layout/activity_create_wakie">
 
     <LinearLayout
-        android:paddingBottom="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:orientation="vertical">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/time"
@@ -29,47 +29,150 @@
 
         <TextView
             android:id="@+id/date"
+            fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            fontPath="Roboto-Regular.ttf"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@android:color/white"
             tools:text="Monday, May 23, 2014" />
     </LinearLayout>
+
     <RelativeLayout
-        android:padding="20dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:id="@+id/time_layout"
+        style="@style/AppTheme.WakieListItems"
+        >
+
         <com.mikepenz.iconics.view.IconicsImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
             android:id="@+id/clock"
-            android:layout_alignParentLeft="true"
-            app:iiv_color="@color/secondaryText"
-            app:iiv_icon="cmd_clock"
-            />
-        <TextView
-            android:layout_toRightOf="@+id/clock"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:text="Time"
+            style="@style/AppTheme.WakieListIcons"
+            app:iiv_icon="cmd_clock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/divider"
-            android:textAppearance="?android:textAppearanceMedium"
-            />
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/clock"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:id="@+id/edit_time"
-            tools:text="12:30"
-            android:textColor="@color/primaryText"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/divider" />
+
+                <TextView
+                    android:id="@+id/edit_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/primaryText"
+                    tools:text="12:30" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider" />
+        </LinearLayout>
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:id="@+id/date_layout"
+        style="@style/AppTheme.WakieListItems">
+
+        <com.mikepenz.iconics.view.IconicsImageView
+            android:id="@+id/calendar"
+            style="@style/AppTheme.WakieListIcons"
+            app:iiv_icon="cmd_calendar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/calendar"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/divider" />
+
+                <TextView
+                    android:id="@+id/edit_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/primaryText"
+                    tools:text="September 3,2015" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mentor_layout"
+        style="@style/AppTheme.WakieListItems">
+
+        <com.mikepenz.iconics.view.IconicsImageView
+            android:id="@+id/person"
+            style="@style/AppTheme.WakieListIcons"
+            app:iiv_icon="cmd_account" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/person"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mentor"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/divider" />
+
+                <TextView
+                    android:id="@+id/edit_mentor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/primaryText"
+                    tools:text="Kristy Arnett" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

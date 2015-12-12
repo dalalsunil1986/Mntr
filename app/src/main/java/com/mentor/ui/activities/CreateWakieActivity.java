@@ -33,6 +33,10 @@ public class CreateWakieActivity extends BaseActivity {
     TextView date;
     @Bind(R.id.edit_time)
     TextView editTime;
+    @Bind(R.id.edit_date)
+    TextView editDate;
+    @Bind(R.id.edit_mentor)
+    TextView editMentor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class CreateWakieActivity extends BaseActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
         ButterKnife.bind(this);
@@ -80,5 +84,7 @@ public class CreateWakieActivity extends BaseActivity {
 
         time.setText(alarmText);
         editTime.setText(wakieItem.getTime().toString("H:mm aa"));
+        editDate.setText(wakieItem.getDate().toString("MMMM d, yyyy"));
+        editMentor.setText("Kristy Moreno");
     }
 }
