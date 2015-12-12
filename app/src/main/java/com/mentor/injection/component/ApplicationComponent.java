@@ -21,7 +21,7 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     void inject(MainActivity mainActivity);
-    void inject(LoginActivity loginActivitiy);
+    void inject(LoginActivity loginActivity);
     void inject(RetrofitHelper retrofitHelper);
     void inject(MentorErrorHandler mentorErrorHandler);
     void inject(BaseActivity baseActivity);
