@@ -12,7 +12,6 @@
     tools:showIn="@layout/activity_create_wakie">
 
     <LinearLayout
-        android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -33,16 +32,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            fontPath="Roboto-Regular.ttf"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@android:color/white"
             tools:text="Monday, May 23, 2014" />
     </LinearLayout>
     <RelativeLayout
+        android:padding="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <com.mikepenz.iconics.view.IconicsImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_centerVertical="true"
             android:id="@+id/clock"
             android:layout_alignParentLeft="true"
             app:iiv_color="@color/secondaryText"
@@ -50,21 +52,21 @@
             />
         <TextView
             android:layout_toRightOf="@+id/clock"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:text="Time"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondaryText"
+            android:textColor="@color/divider"
             android:textAppearance="?android:textAppearanceMedium"
             />
 
         <TextView
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
+            android:id="@+id/edit_time"
             tools:text="12:30"
             android:textColor="@color/primaryText"
             android:textAppearance="?android:textAppearanceMedium"
-            android:layout_marginRight="20dp"
             android:layout_height="wrap_content" />
 
     </RelativeLayout>

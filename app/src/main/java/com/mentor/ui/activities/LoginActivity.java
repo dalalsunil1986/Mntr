@@ -1,11 +1,9 @@
 package com.mentor.ui.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;

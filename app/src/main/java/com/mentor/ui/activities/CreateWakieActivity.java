@@ -3,20 +3,23 @@ package com.mentor.ui.activities;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.style.ForegroundColorSpan;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.mentor.R;
 import com.mentor.ui.viewmodels.WakieItem;
+import com.mentor.util.Spanny;
 
 import org.joda.time.DateTime;
 import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class CreateWakieActivity extends BaseActivity {
 
@@ -28,6 +31,8 @@ public class CreateWakieActivity extends BaseActivity {
     TextView time;
     @Bind(R.id.date)
     TextView date;
+    @Bind(R.id.edit_time)
+    TextView editTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +52,15 @@ public class CreateWakieActivity extends BaseActivity {
         setToolbar(toolbar);
 
         if (getIntent().hasExtra("wakie")) {
-            wakieItem = Parcels.unwrap(getIntent().getParcelableExtra("alarm"));
+            wakieItem = Parcels.unwrap(getIntent().getParcelableExtra("wakie"));
             setUpWakie(wakieItem);
 
         } else {
-            wakieItem= new WakieItem();
+            wakieItem = new WakieItem();
             DateTime now = DateTime.now();
             DateTime futureTime = DateTime.now().plusHours(5).minusMinutes(now.getMinuteOfDay());
 
-            wakieItem.setDate(now);
+            wakieItem.setDate(futureTime);
             wakieItem.setTime(futureTime);
 
             setUpWakie(wakieItem);
@@ -64,9 +69,16 @@ public class CreateWakieActivity extends BaseActivity {
     }
 
     public void setUpWakie(WakieItem wakieItem) {
-        date.setText(wakieItem.getDate().toString("EEEE, MMMM d, yyyy"));
-        time.setText(wakieItem.getTime().toString("h:mm"));
+        date.setText(wakieItem.getDate().toString("EEEE, MMMM d, yyyy").toUpperCase());
 
+        CalligraphyTypefaceSpan regularSpan = new CalligraphyTypefaceSpan(TypefaceUtils.load(getAssets(), "Roboto-Light.ttf"));
+        CalligraphyTypefaceSpan lightSpan = new CalligraphyTypefaceSpan(TypefaceUtils.load(getAssets(), "Roboto-Thin.ttf"));
 
+        Spanny alarmText = new Spanny()
+                .append(wakieItem.getTime().toString("H"), regularSpan, new ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.white)))
+                .append(wakieItem.getTime().toString(":mm"), lightSpan, new ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.white)));
+
+        time.setText(alarmText);
+        editTime.setText(wakieItem.getTime().toString("H:mm aa"));
     }
 }
