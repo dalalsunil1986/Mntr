@@ -27,7 +27,6 @@ import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
 
 import eu.inloop.easygcm.GcmListener;
-import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -95,8 +94,6 @@ public class MentorApp extends Application implements GcmListener {
         //Date library that needs initializing for timezone changes etc.
         JodaTimeAndroid.init(this);
 
-        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
-
     }
 
     /*
@@ -141,7 +138,6 @@ public class MentorApp extends Application implements GcmListener {
         try {
             Reservoir.init(this, 2048, builder.create());
         } catch (Exception e) {
-            Timber.d(e.getMessage());
         }
     }
 

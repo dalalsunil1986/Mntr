@@ -2,13 +2,9 @@ package com.mentor.ui.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,8 +18,6 @@ import com.mentor.core.FileManager;
 import com.mentor.core.MediaType;
 import com.mentor.core.PreferenceManager;
 import com.mentor.listeners.FragmentToolbarListener;
-import com.mentor.ui.fragment.ActivityFragment;
-import com.mentor.ui.fragment.HomeFragment;
 import com.mentor.ui.fragment.WakieFragment;
 import com.mentor.util.GeneralUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
@@ -37,7 +31,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 import java.io.File;
 
@@ -45,7 +38,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements FragmentToolbarListener {
     @Bind(R.id.dashboard_content)
