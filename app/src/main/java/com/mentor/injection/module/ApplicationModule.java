@@ -49,8 +49,9 @@ public class ApplicationModule {
     @Singleton
     RealmConfiguration provideRealmConfiguration() {
         return new RealmConfiguration.Builder(app)
-                .schemaVersion(Migration.SCHEMA_VERSION)
-                .migration(new Migration())
+                //.schemaVersion(Migration.SCHEMA_VERSION)
+                //.migration(new Migration())
+                .deleteRealmIfMigrationNeeded()
                 .build();
     }
 

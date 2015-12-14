@@ -3,6 +3,7 @@ package com.mentor.ui.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
@@ -234,6 +236,7 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
                                 wakie.setTime(getWakieModel.getTime().toDate());
                                 wakie.setWakieIdentifier(identifier);
 
+
                             }
                         },new Realm.Transaction.Callback(){
                             @Override
@@ -242,11 +245,16 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
 
                                 WakieManager wakieManager = new WakieManager();
                                 wakieManager.createAlarm(CreateWakieActivity.this,identifier,getWakieModel.getWakieId(),getWakieModel.getTime().getMillis());
+
+                                Intent intent=new Intent(CreateWakieActivity.this,MainActivity.class);
+                                startActivity(intent);
                             }
 
                             @Override
                             public void onError(Exception e) {
                                 dialog.dismiss();
+
+                                Log.v("Wakie db",e.getLocalizedMessage());
 
                             }
                         }
@@ -254,6 +262,8 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
 
                     } else {
                         dialog.dismiss();
+                        Log.v("Wakie","server error");
+
 
                     }
                 }
