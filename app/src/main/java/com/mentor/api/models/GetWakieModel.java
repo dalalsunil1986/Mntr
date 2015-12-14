@@ -3,14 +3,14 @@ package com.mentor.api.models;
 import org.joda.time.DateTime;
 
 /**
- * Created by Joel on 10/12/2015.
+ * Created by Joel on 14/12/2015.
  */
-public class CreateWakieModel
-{
+public class GetWakieModel {
     private DateTime Time;
+    private String wakieId;
     private String mentorId;
     private Boolean vibrate;
-
+    private String mentorName;
 
     public DateTime getTime() {
         return Time;
@@ -18,6 +18,14 @@ public class CreateWakieModel
 
     public void setTime(DateTime time) {
         Time = time;
+    }
+
+    public String getWakieId() {
+        return wakieId;
+    }
+
+    public void setWakieId(String wakieId) {
+        this.wakieId = wakieId;
     }
 
     public String getMentorId() {
@@ -34,5 +42,13 @@ public class CreateWakieModel
 
     public void setVibrate(Boolean vibrate) {
         this.vibrate = vibrate;
+    }
+
+    public String getMentorName() {
+        return mentorName;
+    }
+
+    public void setMentorName(String mentorName) {
+        this.mentorName = mentorName;
     }
 }

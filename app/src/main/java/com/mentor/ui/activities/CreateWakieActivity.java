@@ -2,6 +2,7 @@ package com.mentor.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,6 +22,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mentor.R;
 import com.mentor.api.MentorApiService;
 import com.mentor.api.models.CreateWakieModel;
+import com.mentor.api.models.GetWakieModel;
+import com.mentor.core.WakieManager;
 import com.mentor.db.Wakie;
 import com.mentor.ui.viewmodels.WakieItem;
 import com.mentor.util.SnackBarFactory;
@@ -37,6 +40,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import retrofit.Call;
@@ -72,6 +76,8 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
     RelativeLayout mentorLayout;
     @Bind(R.id.coordinator)
     CoordinatorLayout coordinator;
+
+    RealmAsyncTask transaction;
 
     @Inject
     Realm realm;
@@ -162,6 +168,7 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
         setUpWakie(wakieItem);
     }
 
+    @OnClick(R.id.save)
     public void saveAlarm() {
 
 
@@ -200,16 +207,60 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
             createWakieModel.setMentorId(null);
             createWakieModel.setVibrate(true);
 
-            Call<CreateWakieModel> wakieModelCall = mentorApiService.createWakie(createWakieModel);
+            final Call<GetWakieModel> wakieModelCall = mentorApiService.createWakie(createWakieModel);
 
-            wakieModelCall.enqueue(new Callback<CreateWakieModel>() {
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
-                public void onResponse(Response<CreateWakieModel> response, Retrofit retrofit) {
+                public void onCancel(DialogInterface dialog) {
+                    wakieModelCall.cancel();
+                }
+            });
+            wakieModelCall.enqueue(new Callback<GetWakieModel>() {
+                @Override
+                public void onResponse(Response<GetWakieModel> response, Retrofit retrofit) {
 
+                    if (response.body() != null) {
+
+                        final GetWakieModel getWakieModel=response.body();
+
+                        final int identifier=(int) (System.currentTimeMillis() & 0xfffffff);
+                        transaction = realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm bgRealm) {
+                                Wakie wakie = realm.createObject(Wakie.class);
+                                wakie.setMentorId(getWakieModel.getMentorId());
+                                wakie.setMentorName(getWakieModel.getMentorName());
+                                wakie.setWakieId(getWakieModel.getWakieId());
+                                wakie.setTime(getWakieModel.getTime().toDate());
+                                wakie.setWakieIdentifier(identifier);
+
+                            }
+                        },new Realm.Transaction.Callback(){
+                            @Override
+                            public void onSuccess() {
+                                dialog.dismiss();
+
+                                WakieManager wakieManager = new WakieManager();
+                                wakieManager.createAlarm(CreateWakieActivity.this,identifier,getWakieModel.getWakieId(),getWakieModel.getTime().getMillis());
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                dialog.dismiss();
+
+                            }
+                        }
+                        );
+
+                    } else {
+                        dialog.dismiss();
+
+                    }
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
+                    dialog.dismiss();
 
                 }
             });

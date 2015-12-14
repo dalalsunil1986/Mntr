@@ -11,7 +11,8 @@ public class Wakie extends RealmObject {
     private Date time;
     private String mentorName;
     private String mentorId;
-    private String alarmId;
+    private String wakieId;
+    private int wakieIdentifier;
 
     public Date getTime() {
         return time;
@@ -37,11 +38,19 @@ public class Wakie extends RealmObject {
         this.mentorId = mentorId;
     }
 
-    public String getAlarmId() {
-        return alarmId;
+    public String getWakieId() {
+        return wakieId;
     }
 
-    public void setAlarmId(String alarmId) {
-        this.alarmId = alarmId;
+    public void setWakieId(String wakieId) {
+        this.wakieId = wakieId;
+    }
+
+    public int getWakieIdentifier() {
+        return wakieIdentifier;
+    }
+
+    public void setWakieIdentifier(int wakieIdentifier) {
+        this.wakieIdentifier = wakieIdentifier;
     }
 }
