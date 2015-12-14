@@ -1,6 +1,7 @@
 package com.mentor.api;
 
 import android.app.Application;
+import android.os.Build;
 
 import com.google.gson.GsonBuilder;
 import com.mentor.BuildConfig;
@@ -26,18 +27,15 @@ import retrofit.Retrofit;
 /**
  * Created by Joel on 11/11/2015.
  */
-public class RetrofitHelper
-{
+public class RetrofitHelper {
     @Inject
     PreferenceManager preferenceManager;
 
-    public RetrofitHelper(Application app)
-    {
+    public RetrofitHelper(Application app) {
         MentorApp.get(app).getComponent().inject(this);
     }
 
-    public MentorApiService newMentorApiService()
-    {
+    public MentorApiService newMentorApiService() {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(DateTime.class, new DateTimeConverter());
 
@@ -60,32 +58,39 @@ public class RetrofitHelper
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 request = request.newBuilder()
-                .addHeader("Authorization", "Bearer " + preferenceManager.getBearerToken())
-                .addHeader("User", preferenceManager.getName())
-                .build();
+                        .addHeader("Authorization", "Bearer " + preferenceManager.getBearerToken())
+                        .addHeader("User", preferenceManager.getName())
+                        .build();
                 Response response = chain.proceed(request);
                 return response;
             }
         });
 
-        client.interceptors().add(new LoggingInterceptor());
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            client.interceptors().add(logging);
+        }
 
-        Retrofit retrofit= new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(builder.create()))
-                .baseUrl(BuildConfig.DEBUG?MentorApiService.TEST_ENDPOINT:MentorApiService.ENDPOINT)
+                .baseUrl(BuildConfig.DEBUG ? MentorApiService.TEST_ENDPOINT : MentorApiService.ENDPOINT)
                 .build();
 
         return retrofit.create(MentorApiService.class);
     }
 
-    public MentorTokenService newMentorTokenService()
-    {
+    public MentorTokenService newMentorTokenService() {
         OkHttpClient client = new OkHttpClient();
 
-        client.interceptors().add(new LoggingInterceptor());
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            client.interceptors().add(logging);
+        }
 
-        Retrofit retrofit= new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .baseUrl(BuildConfig.DEBUG ? MentorTokenService.TEST_ENDPOINT : MentorTokenService.ENDPOINT)

@@ -142,6 +142,12 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(intent);
                             }
+                            else
+                            {
+                                authDialog.dismiss();
+                                SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,R.string.something_wrong).show();
+
+                            }
 
                         }
 
@@ -149,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                         public void onFailure(Throwable t) {
 
                             authDialog.dismiss();
-                            SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,R.string.something_wrong);
+                            SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,R.string.something_wrong).show();
 
                         }
                     });
