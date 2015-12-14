@@ -39,6 +39,10 @@ import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
@@ -196,13 +200,19 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
             createWakieModel.setMentorId(null);
             createWakieModel.setVibrate(true);
 
+            Call<CreateWakieModel> wakieModelCall = mentorApiService.createWakie(createWakieModel);
 
+            wakieModelCall.enqueue(new Callback<CreateWakieModel>() {
+                @Override
+                public void onResponse(Response<CreateWakieModel> response, Retrofit retrofit) {
 
+                }
 
+                @Override
+                public void onFailure(Throwable t) {
 
-
-
-
+                }
+            });
         }
     }
 
