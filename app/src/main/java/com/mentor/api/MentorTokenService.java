@@ -2,6 +2,7 @@ package com.mentor.api;
 
 import com.mentor.api.models.BearerToken;
 
+import retrofit.Call;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -15,5 +16,6 @@ public interface MentorTokenService {
     String TEST_ENDPOINT="http://getmentorapp.azurewebsites.net";
 
     @FormUrlEncoded
-    @POST("/token") void fetchBearerToken(@Field("grant_type") String grantType, @Field("accessToken") String facebookAccessToken,@Field("deviceType")String deviceType,@Field("deviceId")String deviceId,@Field("pushId")String pushId,@Field("accountType")String accountType,Callback<BearerToken> bearerTokenCallback);
+    @POST("/token")
+    Call<BearerToken> fetchBearerToken(@Field("grant_type") String grantType, @Field("accessToken") String facebookAccessToken, @Field("deviceType")String deviceType, @Field("deviceId")String deviceId, @Field("pushId")String pushId, @Field("accountType")String accountType);
 }

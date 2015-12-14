@@ -6,16 +6,22 @@ import com.google.gson.GsonBuilder;
 import com.mentor.BuildConfig;
 import com.mentor.MentorApp;
 import com.mentor.core.DateTimeConverter;
-import com.mentor.core.MentorErrorHandler;
 import com.mentor.core.PreferenceManager;
+import com.squareup.okhttp.Authenticator;
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.joda.time.DateTime;
 
+import java.io.IOException;
+import java.net.Proxy;
+
 import javax.inject.Inject;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
 
 /**
  * Created by Joel on 11/11/2015.
@@ -24,11 +30,9 @@ public class RetrofitHelper
 {
     @Inject
     PreferenceManager preferenceManager;
-    private Application app;
 
     public RetrofitHelper(Application app)
     {
-        this.app=app;
         MentorApp.get(app).getComponent().inject(this);
     }
 
@@ -37,34 +41,57 @@ public class RetrofitHelper
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(DateTime.class, new DateTimeConverter());
 
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+        OkHttpClient client = new OkHttpClient();
+        client.setAuthenticator(new Authenticator() {
             @Override
-            public void intercept(RequestInterceptor.RequestFacade request) {
+            public Request authenticate(Proxy proxy, Response response) throws IOException {
 
-                request.addHeader("Authorization", "Bearer " + preferenceManager.getBearerToken());
-                request.addHeader("User", preferenceManager.getName());
+                //broadcast log out here.
+                return null;
             }
-        };
 
-        RestAdapter mentorAdapter = new RestAdapter.Builder()
-                .setEndpoint(BuildConfig.DEBUG?MentorApiService.TEST_ENDPOINT:MentorApiService.ENDPOINT)
-                .setLogLevel(BuildConfig.DEBUG?RestAdapter.LogLevel.FULL: RestAdapter.LogLevel.NONE)
-                .setConverter(new GsonConverter(builder.create()))
-                .setErrorHandler(new MentorErrorHandler(app))
-                .setRequestInterceptor(requestInterceptor)
+            @Override
+            public Request authenticateProxy(Proxy proxy, Response response) throws IOException {
+                return null;
+            }
+        });
+        client.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                request = request.newBuilder()
+                .addHeader("Authorization", "Bearer " + preferenceManager.getBearerToken())
+                .addHeader("User", preferenceManager.getName())
+                .build();
+                Response response = chain.proceed(request);
+                return response;
+            }
+        });
+
+        client.interceptors().add(new LoggingInterceptor());
+
+        Retrofit retrofit= new Retrofit.Builder()
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(builder.create()))
+                .baseUrl(BuildConfig.DEBUG?MentorApiService.TEST_ENDPOINT:MentorApiService.ENDPOINT)
                 .build();
 
-        return mentorAdapter.create(MentorApiService.class);
+        return retrofit.create(MentorApiService.class);
     }
 
     public MentorTokenService newMentorTokenService()
     {
-        RestAdapter mentorAdapter = new RestAdapter.Builder()
-                .setEndpoint(BuildConfig.DEBUG ? MentorTokenService.TEST_ENDPOINT : MentorTokenService.ENDPOINT)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+        OkHttpClient client = new OkHttpClient();
+
+        client.interceptors().add(new LoggingInterceptor());
+
+        Retrofit retrofit= new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .baseUrl(BuildConfig.DEBUG ? MentorTokenService.TEST_ENDPOINT : MentorTokenService.ENDPOINT)
                 .build();
 
-        return mentorAdapter.create(MentorTokenService.class);
+        return retrofit.create(MentorTokenService.class);
     }
 
 }

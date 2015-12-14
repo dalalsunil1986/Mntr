@@ -150,9 +150,6 @@ public class MentorApp extends Application implements GcmListener {
         this.applicationComponent = applicationComponent;
     }
 
-
-
-
     /*
     * These methods are triggered when a push notification arrives from
     * the server via GCM

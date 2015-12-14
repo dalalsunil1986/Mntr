@@ -1,5 +1,6 @@
 package com.mentor.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -33,9 +34,11 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Call;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 
 public class LoginActivity extends AppCompatActivity implements FacebookCallback {
 
@@ -102,39 +105,55 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                 else
                 {
                     authDialog.show();
-                    mentorTokenService.fetchBearerToken("password", loginResult.getAccessToken().getToken(),
-                            "android","", "", "facebook", new Callback<BearerToken>() {
-                                @Override
-                                public void success(BearerToken bearerToken, Response response) {
 
+                    final Call<BearerToken> tokenCall=mentorTokenService.fetchBearerToken("password", loginResult.getAccessToken().getToken(),
+                            "android","", "", "facebook");
 
-                                    preferenceManager.setBearerToken(bearerToken.getToken());
-                                    preferenceManager.setLoggedInStatus(true);
-                                    try {
-                                        preferenceManager.setUser(object.getString("name").split("\\s+")[0], object.getString("name").split("\\s+")[1]);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                    authDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            tokenCall.cancel();
+                        }
+                    });
 
-                                    Intent profilePhotoService = new Intent(LoginActivity.this, FbProfilePhotoService.class);
-                                    try {
-                                        profilePhotoService.putExtra("id",object.getString("id"));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    startService(profilePhotoService);
+                    tokenCall.enqueue(new Callback<BearerToken>() {
+                        @Override
+                        public void onResponse(Response<BearerToken> bearerTokenResponse, Retrofit retrofit) {
 
-                                    authDialog.dismiss();
-                                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
+                            if(bearerTokenResponse.body()!=null)
+                            {
+                                preferenceManager.setBearerToken(bearerTokenResponse.body().getToken());
+                                preferenceManager.setLoggedInStatus(true);
+                                try {
+                                    preferenceManager.setUser(object.getString("name").split("\\s+")[0], object.getString("name").split("\\s+")[1]);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    authDialog.dismiss();
-                                    SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,R.string.something_wrong);
+                                Intent profilePhotoService = new Intent(LoginActivity.this, FbProfilePhotoService.class);
+                                try {
+                                    profilePhotoService.putExtra("id",object.getString("id"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            });
+                                startService(profilePhotoService);
+
+                                authDialog.dismiss();
+                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                            authDialog.dismiss();
+                            SnackBarFactory.createSnackbar(LoginActivity.this,coordinator,R.string.something_wrong);
+
+                        }
+                    });
+
 
                 }
             }

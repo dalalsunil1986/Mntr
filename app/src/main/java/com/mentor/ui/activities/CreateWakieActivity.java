@@ -17,7 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mentor.R;
+import com.mentor.api.MentorApiService;
+import com.mentor.api.models.CreateWakieModel;
 import com.mentor.db.Wakie;
 import com.mentor.ui.viewmodels.WakieItem;
 import com.mentor.util.SnackBarFactory;
@@ -68,6 +71,9 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
 
     @Inject
     Realm realm;
+
+    @Inject
+    MentorApiService mentorApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,28 +159,47 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
     }
 
     public void saveAlarm() {
+
+
         final DateTime alarmTime = new DateTime().withDate(wakieItem.getDate().toLocalDate()).withTime(wakieItem.getTime().toLocalTime());
         if (alarmTime.isBeforeNow()) {
 
             Snackbar snackbar = SnackBarFactory.createSnackbar(this, coordinator, R.string.time_passed);
             snackbar.show();
         } else {
+            final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                    .title(R.string.wakie_saving)
+                    .content(R.string.please_wait)
+                    .cancelable(true)
+                    .progress(true, 0).build();
+
+
+            dialog.show();
 
             final RealmResults<Wakie> results = realm.where(Wakie.class).findAllAsync();
             results.addChangeListener(new RealmChangeListener() {
                 @Override
                 public void onChange() {
 
-                    for(Wakie wakie:results)
-                    {
+                    for (Wakie wakie : results) {
                         if (new DateTime(wakie.getTime()).isEqual(alarmTime)) {
-                            SnackBarFactory.createSnackbar(CreateWakieActivity.this,coordinator,"This alarm already exists.").show();
-                            //dialog.dismiss();
+                            SnackBarFactory.createSnackbar(CreateWakieActivity.this, coordinator, "This alarm already exists.").show();
+                            dialog.dismiss();
                             return;
                         }
                     }
                 }
             });
+
+            CreateWakieModel createWakieModel = new CreateWakieModel();
+            createWakieModel.setTime(alarmTime);
+            createWakieModel.setMentorId(null);
+            createWakieModel.setVibrate(true);
+
+
+
+
+
 
 
 

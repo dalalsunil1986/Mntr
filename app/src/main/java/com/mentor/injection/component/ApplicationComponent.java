@@ -1,7 +1,6 @@
 package com.mentor.injection.component;
 
 import com.mentor.api.RetrofitHelper;
-import com.mentor.core.MentorErrorHandler;
 import com.mentor.injection.module.ApplicationModule;
 import com.mentor.ui.activities.BaseActivity;
 import com.mentor.ui.activities.CreateWakieActivity;
@@ -23,7 +22,6 @@ public interface ApplicationComponent {
     void inject(MainActivity mainActivity);
     void inject(LoginActivity loginActivity);
     void inject(RetrofitHelper retrofitHelper);
-    void inject(MentorErrorHandler mentorErrorHandler);
     void inject(BaseActivity baseActivity);
     void inject(CreateWakieActivity createWakieActivity);
 
