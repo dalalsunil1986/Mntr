@@ -1,9 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mentor.ui.fragment.AlarmFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <com.github.glomadrian.loadingballs.BallView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_margin="30dp"
+            app:ball_colors="@array/colors"
+            app:balls="3"
+            app:enable_size_animation="false"
+            app:movement_cycle_time="3000" />
 
-</FrameLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/alarms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -47,6 +47,10 @@ repositories {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
 
+    maven {
+        url "http://dl.bintray.com/glomadrian/maven"
+    }
+
 }
 
 dependencies {
@@ -132,4 +136,5 @@ dependencies {
         transitive = true
     }
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.github.glomadrian:loadingballs:1.1@aar'
 }
