@@ -2,6 +2,8 @@ package com.mentor.injection.module;
 
 import android.app.Application;
 
+import com.algolia.search.saas.APIClient;
+import com.mentor.R;
 import com.mentor.api.MentorApiService;
 import com.mentor.api.MentorTokenService;
 import com.mentor.api.RetrofitHelper;
@@ -40,6 +42,13 @@ public class ApplicationModule {
     @Singleton
     MentorTokenService provideMentorTokenService() {
         return new RetrofitHelper(app).newMentorTokenService();
+    }
+
+    @Provides
+    @Singleton
+    APIClient provideAlgoliaClient()
+    {
+        return new APIClient(app.getString(R.string.algolia_application_id),app.getString(R.string.algolia_search_key));
     }
 
 
