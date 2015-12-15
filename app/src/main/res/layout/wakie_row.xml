@@ -59,6 +59,12 @@
             tools:text="MONDAY,MAY 21,2014"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/date"
+            android:layout_width="match_parent"
+            android:background="@color/divider"
+            android:layout_height="1px"/>
     </RelativeLayout>
 
 </RelativeLayout>

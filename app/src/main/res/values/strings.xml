@@ -22,4 +22,5 @@
     <string name="title_activity_create_wakie">Set Wakie</string>
     <string name="time_passed">Time you selected has already passed.</string>
     <string name="wakie_saving">Saving wakie.</string>
+    <string name="title_activity_select_mentor">SelectMentorActivity</string>
 </resources>
