@@ -87,6 +87,17 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
         notifyItemRemoved(position);
     }
 
+    public void removeAll()
+    {
+        if(!wakieItems.isEmpty())
+        for(WakieItem wakieItem:wakieItems)
+        {
+            int position = wakieItems.indexOf(wakieItem);
+            wakieItems.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.picture)
         CircleImageView picture;

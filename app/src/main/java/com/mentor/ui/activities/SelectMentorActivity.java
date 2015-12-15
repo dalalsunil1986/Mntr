@@ -59,7 +59,7 @@ public class SelectMentorActivity extends BaseActivity implements SearchListener
     public void searchResult(Index index, Query query, JSONObject results) {
 
 
-        
+
     }
 
     @Override

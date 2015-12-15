@@ -11,6 +11,7 @@ public class GetWakieModel {
     private String mentorId;
     private Boolean vibrate;
     private String mentorName;
+    private String mentorPicUrl;
 
     public DateTime getTime() {
         return time;
@@ -50,5 +51,13 @@ public class GetWakieModel {
 
     public void setMentorName(String mentorName) {
         this.mentorName = mentorName;
+    }
+
+    public String getMentorPicUrl() {
+        return mentorPicUrl;
+    }
+
+    public void setMentorPicUrl(String mentorPicUrl) {
+        this.mentorPicUrl = mentorPicUrl;
     }
 }
