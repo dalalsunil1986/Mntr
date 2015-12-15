@@ -12,19 +12,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mentor.R;
+import com.mentor.api.MentorApiService;
+import com.mentor.api.models.GetWakieModel;
 import com.mentor.ui.adapters.AlarmsAdapter;
 import com.mentor.ui.viewmodels.WakieItem;
+import com.mentor.util.GeneralUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AlarmFragment extends Fragment {
+public class AlarmFragment extends BaseFragment {
 
 
     @Bind(R.id.alarms)
@@ -34,8 +44,11 @@ public class AlarmFragment extends Fragment {
     AlarmsAdapter alarmsAdapter;
     ArrayList<WakieItem> wakieItems;
 
+    @Inject
+    MentorApiService mentorApiService;
+
     public AlarmFragment() {
-        // Required empty public constructor
+        applicationComponent().inject(this);
     }
 
 
@@ -63,7 +76,20 @@ public class AlarmFragment extends Fragment {
 
     public void fetchWakies()
     {
-        
+        Call<List<GetWakieModel>> wakieListCall = mentorApiService.getWakies(1,1000, GeneralUtils.getUniquePsuedoID());
+
+        wakieListCall.enqueue(new Callback<List<GetWakieModel>>() {
+            @Override
+            public void onResponse(Response<List<GetWakieModel>> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
     }
 
     @Override

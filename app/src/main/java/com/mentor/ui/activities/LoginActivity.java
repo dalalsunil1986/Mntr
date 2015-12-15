@@ -21,6 +21,7 @@ import com.mentor.api.models.BearerToken;
 import com.mentor.core.PreferenceManager;
 import com.mentor.injection.component.ApplicationComponent;
 import com.mentor.services.FbProfilePhotoService;
+import com.mentor.util.GeneralUtils;
 import com.mentor.util.SnackBarFactory;
 
 import org.json.JSONException;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import eu.inloop.easygcm.GcmHelper;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -107,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookCallback
                     authDialog.show();
 
                     final Call<BearerToken> tokenCall=mentorTokenService.fetchBearerToken("password", loginResult.getAccessToken().getToken(),
-                            "android","", "", "facebook");
+                            "android", GeneralUtils.getUniquePsuedoID(), GcmHelper.getRegistrationId(LoginActivity.this),"facebook");
 
                     authDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                         @Override
