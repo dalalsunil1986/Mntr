@@ -1,13 +1,14 @@
 package com.mentor.db;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
 
-import io.realm.RealmObject;
 
 /**
  * Created by Joel on 12/12/2015.
  */
-public class Wakie extends RealmObject {
+public class Wakie extends SugarRecord {
     private Date time;
     private String mentorName;
     private String mentorId;

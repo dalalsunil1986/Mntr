@@ -6,18 +6,18 @@ import org.joda.time.DateTime;
  * Created by Joel on 14/12/2015.
  */
 public class GetWakieModel {
-    private DateTime Time;
+    private DateTime time;
     private String wakieId;
     private String mentorId;
     private Boolean vibrate;
     private String mentorName;
 
     public DateTime getTime() {
-        return Time;
+        return time;
     }
 
     public void setTime(DateTime time) {
-        Time = time;
+        this.time = time;
     }
 
     public String getWakieId() {

@@ -10,8 +10,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 import static org.mockito.Mockito.mock;
 
@@ -44,26 +42,6 @@ public class ApplicationTestModule {
         return mock(MentorTokenService.class);
     }
 
-    @Provides
-    @Singleton
-    RealmConfiguration provideRealmConfiguration() {
-
-        final RealmConfiguration configuration = new RealmConfiguration.Builder(app)
-                .name("test.realm")
-                .deleteRealmIfMigrationNeeded()
-                .schemaVersion(0L)
-                .build();
-
-        Realm.deleteRealm(configuration);
-
-        return configuration;
-    }
-
-    @Provides
-    @Singleton
-    Realm provideDefaultRealm(RealmConfiguration config) {
-        return Realm.getInstance(config);
-    }
 
 
 }

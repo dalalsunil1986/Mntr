@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.widget.ImageView;
 
 import com.anupcowkur.reservoir.Reservoir;
@@ -20,6 +21,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
+import com.orm.SugarApp;
 import com.squareup.picasso.Picasso;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -32,7 +34,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 /**
  * Created by Joel on 09/11/2015.
  */
-public class MentorApp extends Application implements GcmListener {
+public class MentorApp extends SugarApp implements GcmListener {
 
     ApplicationComponent applicationComponent;
 
@@ -40,6 +42,7 @@ public class MentorApp extends Application implements GcmListener {
     public void onCreate() {
         super.onCreate();
 
+        MultiDex.install(this);
         generalInit();
         dependencyInjectionInit();
         fontsInit();

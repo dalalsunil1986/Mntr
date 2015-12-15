@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mentor.R;
@@ -30,21 +31,21 @@ import com.mentor.db.Wakie;
 import com.mentor.ui.viewmodels.WakieItem;
 import com.mentor.util.SnackBarFactory;
 import com.mentor.util.Spanny;
+import com.orm.query.Select;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
-import io.realm.RealmAsyncTask;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -78,11 +79,6 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
     RelativeLayout mentorLayout;
     @Bind(R.id.coordinator)
     CoordinatorLayout coordinator;
-
-    RealmAsyncTask transaction;
-
-    @Inject
-    Realm realm;
 
     @Inject
     MentorApiService mentorApiService;
@@ -189,20 +185,14 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
 
             dialog.show();
 
-            final RealmResults<Wakie> results = realm.where(Wakie.class).findAllAsync();
-            results.addChangeListener(new RealmChangeListener() {
-                @Override
-                public void onChange() {
-
-                    for (Wakie wakie : results) {
-                        if (new DateTime(wakie.getTime()).isEqual(alarmTime)) {
-                            SnackBarFactory.createSnackbar(CreateWakieActivity.this, coordinator, "This alarm already exists.").show();
-                            dialog.dismiss();
-                            return;
-                        }
-                    }
+            List<Wakie> wakies = Select.from(Wakie.class).list();
+            for (Wakie wakie : wakies) {
+                if (new DateTime(wakie.getTime()).isEqual(alarmTime)) {
+                    SnackBarFactory.createSnackbar(CreateWakieActivity.this, coordinator, "This alarm already exists.").show();
+                    dialog.dismiss();
+                    return;
                 }
-            });
+            }
 
             CreateWakieModel createWakieModel = new CreateWakieModel();
             createWakieModel.setTime(alarmTime);
@@ -226,43 +216,24 @@ public class CreateWakieActivity extends BaseActivity implements TimePickerDialo
                         final GetWakieModel getWakieModel=response.body();
 
                         final int identifier=(int) (System.currentTimeMillis() & 0xfffffff);
-                        transaction = realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm bgRealm) {
-                                Wakie wakie = realm.createObject(Wakie.class);
-                                wakie.setMentorId(getWakieModel.getMentorId());
-                                wakie.setMentorName(getWakieModel.getMentorName());
-                                wakie.setWakieId(getWakieModel.getWakieId());
-                                wakie.setTime(getWakieModel.getTime().toDate());
-                                wakie.setWakieIdentifier(identifier);
 
+                        Wakie wakie = new Wakie();
+                        wakie.setMentorId(getWakieModel.getMentorId());
+                        wakie.setMentorName(getWakieModel.getMentorName());
+                        wakie.setWakieId(getWakieModel.getWakieId());
+                        wakie.setTime(getWakieModel.getTime().toDate());
+                        wakie.setWakieIdentifier(identifier);
 
-                            }
-                        },new Realm.Transaction.Callback(){
-                            @Override
-                            public void onSuccess() {
-                                dialog.dismiss();
+                        wakie.save();
 
-                                WakieManager wakieManager = new WakieManager();
-                                wakieManager.createAlarm(CreateWakieActivity.this,identifier,getWakieModel.getWakieId(),getWakieModel.getTime().getMillis());
+                        WakieManager wakieManager = new WakieManager();
+                        wakieManager.createAlarm(CreateWakieActivity.this,identifier,getWakieModel.getWakieId(),getWakieModel.getTime().getMillis());
 
-                                Intent intent=new Intent(CreateWakieActivity.this,MainActivity.class);
-                                startActivity(intent);
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-                                dialog.dismiss();
-
-                                Log.v("Wakie db",e.getLocalizedMessage());
-
-                            }
-                        }
-                        );
+                        Intent intent=new Intent(CreateWakieActivity.this,MainActivity.class);
+                        startActivity(intent);
 
                     } else {
                         dialog.dismiss();
-                        Log.v("Wakie","server error");
 
 
                     }
