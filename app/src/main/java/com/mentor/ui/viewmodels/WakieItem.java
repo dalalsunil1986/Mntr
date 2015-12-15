@@ -15,6 +15,7 @@ public class WakieItem {
     boolean vibrate=false;
     String wakieId;
     DateTime date;
+    String mentorPicUrl;
 
     public boolean isVibrate() {
         return vibrate;
@@ -62,5 +63,13 @@ public class WakieItem {
 
     public void setDate(DateTime date) {
         this.date = date;
+    }
+
+    public String getMentorPicUrl() {
+        return mentorPicUrl;
+    }
+
+    public void setMentorPicUrl(String mentorPicUrl) {
+        this.mentorPicUrl = mentorPicUrl;
     }
 }
