@@ -41,6 +41,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
     public void onBindViewHolder(AlarmViewHolder holder, int position) {
         WakieItem wakieItem=wakieItems.get(position);
 
+
     }
 
 
