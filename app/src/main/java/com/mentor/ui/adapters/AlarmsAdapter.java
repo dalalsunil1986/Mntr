@@ -1,16 +1,21 @@
 package com.mentor.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mentor.R;
+import com.mentor.ui.activities.CreateWakieActivity;
 import com.mentor.ui.viewmodels.WakieItem;
 import com.mentor.util.Spanny;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -45,7 +50,16 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
 
     @Override
     public void onBindViewHolder(AlarmViewHolder holder, int position) {
-        WakieItem wakieItem = wakieItems.get(position);
+        final WakieItem wakieItem = wakieItems.get(position);
+
+        holder.main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(context, CreateWakieActivity.class);
+                intent.putExtra("wakie",Parcels.wrap(wakieItem));
+                context.startActivity(intent);
+            }
+        });
 
         holder.date.setText(wakieItem.getDate().toString("EEEE, MMMM d, yyyy").toUpperCase());
 
@@ -109,6 +123,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
         TextView date;
         @Bind(R.id.time)
         TextView time;
+        @Bind(R.id.main_content)
+        RelativeLayout main;
 
         public AlarmViewHolder(View itemView) {
             super(itemView);

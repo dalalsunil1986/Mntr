@@ -19,6 +19,7 @@ import com.mentor.api.models.GetWakieModel;
 import com.mentor.ui.adapters.AlarmsAdapter;
 import com.mentor.ui.viewmodels.WakieItem;
 import com.mentor.util.GeneralUtils;
+import com.mentor.util.SnackBarFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +110,6 @@ public class AlarmFragment extends BaseFragment {
                         return;
                     }
 
-                    List<WakieItem> wakieItems= new ArrayList<>();
-
                     alarmsAdapter.removeAll();
 
                     for(GetWakieModel wakieModel:wakieModels)
@@ -126,6 +125,10 @@ public class AlarmFragment extends BaseFragment {
                         alarmsAdapter.add(wakieItem);
                     }
                 }
+                else
+                {
+                    SnackBarFactory.createSnackbar(getActivity(),getView(),R.string.something_wrong).show();
+                }
 
                 progress.setVisibility(View.GONE);
 
@@ -134,7 +137,7 @@ public class AlarmFragment extends BaseFragment {
             @Override
             public void onFailure(Throwable t) {
                 progress.setVisibility(View.GONE);
-                
+                SnackBarFactory.createSnackbar(getActivity(),getView(),t.getMessage()).show();
 
             }
         });
