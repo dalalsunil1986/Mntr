@@ -56,6 +56,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(context, CreateWakieActivity.class);
+                wakieItem.setUpdateMode(true);
                 intent.putExtra("wakie",Parcels.wrap(wakieItem));
                 context.startActivity(intent);
             }
