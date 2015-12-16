@@ -81,7 +81,14 @@
         <activity
             android:name=".ui.activities.SelectMentorActivity"
             android:label="@string/title_activity_select_mentor"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
+        <service
+            android:name=".services.MediaService"
+            android:enabled="false"
+            android:exported="false" />
+
+        <activity android:name=".ui.activities.AlarmingActivity"></activity>
     </application>
 
 </manifest>

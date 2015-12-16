@@ -2,6 +2,7 @@ package com.mentor.injection.module;
 
 import android.app.Application;
 
+import com.algolia.search.saas.APIClient;
 import com.mentor.api.MentorApiService;
 import com.mentor.api.MentorTokenService;
 import com.mentor.core.PreferenceManager;
@@ -42,6 +43,13 @@ public class ApplicationTestModule {
         return mock(MentorTokenService.class);
     }
 
+
+    @Provides
+    @Singleton
+    APIClient provideAlgoliaClient()
+    {
+        return mock(APIClient.class);
+    }
 
 
 }
